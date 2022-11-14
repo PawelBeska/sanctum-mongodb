@@ -4,42 +4,21 @@ namespace Laravel\Sanctum;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
+use JsonException;
 
 class NewAccessToken implements Arrayable, Jsonable
 {
-    /**
-     * The access token instance.
-     *
-     * @var \Laravel\Sanctum\PersonalAccessToken
-     */
-    public $accessToken;
+    public PersonalAccessToken $accessToken;
 
-    /**
-     * The plain text version of the token.
-     *
-     * @var string
-     */
-    public $plainTextToken;
+    public string $plainTextToken;
 
-    /**
-     * Create a new access token result.
-     *
-     * @param  \Laravel\Sanctum\PersonalAccessToken  $accessToken
-     * @param  string  $plainTextToken
-     * @return void
-     */
     public function __construct(PersonalAccessToken $accessToken, string $plainTextToken)
     {
         $this->accessToken = $accessToken;
         $this->plainTextToken = $plainTextToken;
     }
 
-    /**
-     * Get the instance as an array.
-     *
-     * @return array
-     */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'accessToken' => $this->accessToken,
@@ -48,13 +27,10 @@ class NewAccessToken implements Arrayable, Jsonable
     }
 
     /**
-     * Convert the object to its JSON representation.
-     *
-     * @param  int  $options
-     * @return string
+     * @throws JsonException
      */
-    public function toJson($options = 0)
+    public function toJson(int $options = 0): string
     {
-        return json_encode($this->toArray(), $options);
+        return json_encode($this->toArray(), JSON_THROW_ON_ERROR | $options);
     }
 }

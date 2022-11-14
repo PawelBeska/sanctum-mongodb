@@ -3,15 +3,11 @@
 namespace Laravel\Sanctum;
 
 use Mockery;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class Sanctum
 {
-    /**
-     * The personal access client model class name.
-     *
-     * @var string
-     */
-    public static $personalAccessTokenModel = 'Laravel\\Sanctum\\PersonalAccessToken';
+    public static string $personalAccessTokenModel = PersonalAccessToken::class;
 
     /**
      * A callback that can get the token from the request.
@@ -32,7 +28,7 @@ class Sanctum
      *
      * @var bool
      */
-    public static $runsMigrations = true;
+    public static bool $runsMigrations = true;
 
     /**
      * Get the current application URL from the "APP_URL" environment variable - with port.
